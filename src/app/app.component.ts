@@ -6,5 +6,11 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'formControlApp';
+  title = 'template-driven-form';
+
+  onFormSubmitted(form: HTMLFormElement){
+    console.log(form);
+  }
+
+
 }

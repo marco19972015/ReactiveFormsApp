@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
 @Component({
@@ -9,11 +9,12 @@ import { NgForm } from '@angular/forms';
 export class AppComponent {
   title = 'template-driven-form';
 
+  // Using ViewChild allows us to access a DOM element or a component from the template
+  // In this case I use it to access the reference template variable which holds the form as an object of type NgForm
+  @ViewChild('registrationForm') form!: NgForm
 
-  // When we use ngForm it converts the type of form from HTMLFormElement to type an instance of ngForm
-  onFormSubmitted(form: NgForm){
-    // When we log out the form we will get an object of type NgForm
-    console.log(form);
-    
+  onFormSubmitted(){
+    // reference the form variable 
+    console.log(this.form);
   }
 }

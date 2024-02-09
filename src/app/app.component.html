@@ -1,10 +1,12 @@
 <section class="container">
   <header>Registration Form</header>
 
-  <!-- In order for the event to be raised we bind to ngSubmit and execute a method  -->
-  <!-- We use #registrationForm as a template reference variable and pass that to the method onFormSubmitted
-       This allows us to log out the form itself-->
-  <form class="form" (ngSubmit)="onFormSubmitted(registrationForm)" #registrationForm>
+  <!-- Now we want to get the form as a JS object, in order to do that I assign ngForm to the TemplateRV -->
+  <!-- ngForm is a derective and therefore make a form a template driven form -->
+  <!-- We should keep in mind that we don't need to explicitly specifiy this ngForm in order to make this HTML form as a 
+       template driven form, when we imported forms module from angular/forms, angular will find this form and convert it into a 
+       template driven form -->
+  <form class="form" (ngSubmit)="onFormSubmitted(registrationForm)" #registrationForm="ngForm">
     <div class="column">
       <div class="input-box">
         <input type="text" placeholder="First Name" />

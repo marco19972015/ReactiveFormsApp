@@ -6,16 +6,16 @@
   <form class="form" (ngSubmit)="onFormSubmitted()" #registrationForm="ngForm">
     <div class="column">
       <div class="input-box">
-        <input type="text" placeholder="First Name" name="firstName" ngModel/>
+        <input type="text" placeholder="First Name" name="firstName" ngModel required/>
       </div> 
 
       <div class="input-box">
-        <input type="text" placeholder="Last Name" name="lastName" ngModel/>
+        <input type="text" placeholder="Last Name" name="lastName" ngModel required/>
       </div>
     </div>    
 
     <div class="input-box">
-      <input type="text" placeholder="Email" name="email" ngModel/>
+      <input type="text" placeholder="Email" name="email" ngModel required email/>
     </div>
 
     <div class="column">
@@ -68,7 +68,7 @@
         <input type="number" placeholder="Postal code" name="postalCode" ngModel/>
       </div>
     </div>
-    <!-- Whenever we submit this form it's going to emit an event on this form -->
-    <input type="submit" value="Submit" class="submit-btn"> 
+    <!-- Using the template reference variable we can use the valid/invalid property of form -->
+    <input type="submit" value="Submit" class="submit-btn" [disabled]="!registrationForm.valid"> 
   </form>
 </section>

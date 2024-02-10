@@ -38,17 +38,11 @@
       <h3>Gender</h3>
       <!-- All three radio buttons should have the same name attribute -->
       <div class="gender-option">
-        <div class="gender">
-          <input type="radio" id="check-male" name="gender" ngModel />
-          <label for="check-male">male</label>
-        </div>
-        <div class="gender">
-          <input type="radio" id="check-female" name="gender" ngModel/>
-          <label for="check-female">Female</label>
-        </div>
-        <div class="gender">
-          <input type="radio" id="check-other" name="gender" ngModel/>
-          <label for="check-other">prefer not to say</label>
+        <div class="gender" *ngFor="let gender of genders">
+          <!-- Using property binding since we assign these values to an attribute  -->
+          <input type="radio" [id]="gender.id" [value]="gender.value" [name]="gender.value" ngModel />
+          <!-- Using string interpolation to show the display property -->
+          <label [for]="gender.id">{{gender.display}}</label>
         </div>
       </div>
     </div>

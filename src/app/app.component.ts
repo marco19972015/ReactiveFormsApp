@@ -9,6 +9,13 @@ import { NgForm } from '@angular/forms';
 export class AppComponent {
   title = 'template-driven-form';
 
+  // Array with 3 objects 
+  genders = [
+    {id: 'check-male', value: 'male', display: 'Male'},
+    {id: 'check-female', value: 'female', display: 'Female'} ,
+    {id: 'check-other', value: 'other',  display: 'Prefer not to say'},
+  ]
+
   @ViewChild('registrationForm') form!: NgForm
 
   onFormSubmitted(){
@@ -18,25 +25,14 @@ export class AppComponent {
     console.log(this.form.value.lastName);
     console.log(this.form.value.email);
     console.log(this.form.value.region);
-    
-    
+    console.log(this.form.value);
   }
 
-
-  // Side notes 
-  // When we check the form object in dev tools we'll look at two objects, controls and value
-  // controls: references the First Name element, Last Name element and so on in the form
-  // value: should have a property for each control and the value entered in that control
-
-  // FIRST To get the values and controls we need to add a name property to each of the form controls ie name="firstName"
-  // By adding a name property we are able to create the form controls in the NgForm object!!
-
-  // SECOND we need to add ngModel directive
-  // Usually used for 2 way databinding, here we use it to tell angular the input element is a control for this form
-  // In dev tools we can check the controls object, which now shows the controls which include the name reference and ngModel
-  // We can also check the value object, this holds the current value in the control
-
-  // The controls property gives us other properties we can access such as statusChanges, value, disabled, dirty and so on 
-  // value gives us access to just the value.
-  // Therefore, we have options on how to access a value or multiple properties
+  // SIDE NOTES 
+  // Instead of repeating our buttons HTML 3 times, we can use ngFor directive to loop and show the genders
+  // First we create the genders array with 3 objects
+  // We can then go to the template and remove the divs to repeat one specific div for each gender
+  // On the first div I do property binding on id and name since we are assigning those values coming in into an attribute
+  // Then I can add string interpolation for the label
+  // That allows us to creating the input and labels dynamically
 }

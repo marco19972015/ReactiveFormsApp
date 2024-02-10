@@ -33,7 +33,7 @@ export class AppComponent {
 
   // SECOND we need to add ngModel directive
   // Usually used for 2 way databinding, here we use it to tell angular the input element is a control for this form
-  // In dev tools we can check the controls object, which not shows the controls which include the name reference and ngModel
+  // In dev tools we can check the controls object, which now shows the controls which include the name reference and ngModel
   // We can also check the value object, this holds the current value in the control
 
   // The controls property gives us other properties we can access such as statusChanges, value, disabled, dirty and so on 

@@ -1,4 +1,5 @@
-<section class="container">
+<!-- If the form is touched then set the css form-shadow -->
+<section class="container"[ngClass]="{'form-shadow': registrationForm.touched}">
   <header>Registration Form</header>
 
   <!-- Reminder, registrationForm reference variable is going to store a reference to the form as a TS/JS object -->

@@ -6,16 +6,35 @@
   <form class="form" (ngSubmit)="onFormSubmitted()" #registrationForm="ngForm">
     <div class="column">
       <div class="input-box">
-        <input type="text" placeholder="First Name" name="firstName" ngModel required/>
+        <input type="text" placeholder="First Name" 
+              name="firstName" [(ngModel)]="firstname" required #fname="ngModel"/>
+        <div>
+          <small *ngIf="fname.invalid && fname.touched">*First Name is a Required Field</small>
+        </div>
+        <span *ngIf="firstname">You entered: {{firstname}}</span>
+
       </div> 
 
       <div class="input-box">
-        <input type="text" placeholder="Last Name" name="lastName" ngModel required/>
+        <input type="text" placeholder="Last Name" name="lastName" [(ngModel)]="lastname"
+              required #lname="ngModel"/>
+        <div>
+          <small *ngIf="lname.invalid && lname.touched">*Last Name is a Required Field</small>
+          
+        </div>
+        <span *ngIf="lastname">You entered: {{lastname}}</span>
       </div>
     </div>    
 
     <div class="input-box">
-      <input type="text" placeholder="Email" name="email" ngModel required email/>
+      <input type="text" placeholder="Email" name="email" [(ngModel)]="emailProperty"
+           required email #email="ngModel"/>
+      <div>
+        <small *ngIf="email.invalid && email.touched">*Entered email is not valid</small>
+
+      </div>
+              <!-- If the emailProperty has a value, show the value. Elseif it does not have a value, then hide the text -->
+              <span *ngIf="emailProperty">You entered: {{emailProperty}}</span>
     </div>
 
     <div class="column">
@@ -36,12 +55,9 @@
 
     <div class="gender-box">
       <h3>Gender</h3>
-      <!-- All three radio buttons should have the same name attribute -->
       <div class="gender-option">
         <div class="gender" *ngFor="let gender of genders">
-          <!-- Using property binding since we assign these values to an attribute  -->
           <input type="radio" [id]="gender.id" [value]="gender.value" [name]="gender.value" ngModel />
-          <!-- Using string interpolation to show the display property -->
           <label [for]="gender.id">{{gender.display}}</label>
         </div>
       </div>

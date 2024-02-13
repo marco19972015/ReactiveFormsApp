@@ -27,59 +27,52 @@ export class AppComponent {
     console.log(this.form.control.value['firstName']); 
     console.log(this.form.value.lastName);
     console.log(this.form.value.email);
-    console.log(this.form.value.region);
+    console.log(this.form.value.address.country);
     
   }
 
-  // SIDE NOTES FORM VALIDATION 
-  // Going back to the CSS classes that are being added ng-touched/ng-dirty and ng-invalid/ng-valid
-  // We can use these CSS classes to our advantage. When there is some invalid data inside the first name input element we want to show 
-  // that border in red. 
+  defaultCountry: string = 'United States'
 
-  // First we want to create a CSS class to do this. The CSS class name must have ng-invalid because the ng-invalid CSS class gets added to
-  // the form control when it's not valid. We then add the ng-invalid {border: red px solid;} so when the class gets added it will also add the border
-  // NOTE that if we only have ng-invalid as the css class, when the ng-invalid is added we will get the border around the entire form
+  // SIDE NOTES GROUPING OF FORM CONTROLS
+  // The goal of this section is to provide validation at a group level instead of specific form controls like the previous section
+  // A use case for this could be that we have a value that is undefined in a form, so we can just group all the validations together and
+  // provide a generic validation message
 
-  // In order to show the red border around the form control we need to change the CSS class a bit. 
-  // We add input.ng-invalid {...} to the class name - if it's input type and ng-invalid is added then we add the red border 
-  // NOTE that if we have a previous CSS border around the input tag, there might be an issue where it is being overriden, so remove that
+  // Currently the form is of type FormControl where we have an object for each form control of the form itself (seen in controls prop).
+  // In the value object we have properties that are assigned to the names of the form controls.
+  // The address sections is collecting address related information, we can switch this section into FormGroup type.
+  // Doing so will allows us to perform validation on these form controls together.
 
-  // At this point the borders have the red border, HOWEVER now we want the border to change color to red when the user has touched it and the value isn't correct
-  // so we add... ng-touched... input.ng-invalid.ng-touched{...}
-  // Now, if we touch the control and click outside that control, the input field will add a red border. If we add the correct value, the red border will be removed
+  // How do we group them together?
+  // Using ngModelGroup="address" in the div that encapsulates the addres related form control allows us to create the address FormGroup
+  // located in controls. If we expand the address FormGroup we can see that it's a collection of FormControls
+  // address contains a property called controls, when expanded we can see the city, country, postal, ect form control
+  // If we scroll down we can see there are other properties as well. For example there is valid and invalid property. 
+  // If values are validated then the valid property is true, otherwise invalid is true and valid is false
 
+  // FormGroup div container will include CSS classes from angular, such as ng-untouced, ng-perstine, ng-valid.
+  // If we touch ANY of the form controls the FormGroup. ng-untouched will be removed and ng-touched will be added. 
+  // Using any of these form controls inside the FormGroup we can identify if any of the values have been touched.
+  // We can also check if all the controls of the form have a valid value or not
 
-
-  // Now, if the form control doesn't have a valid value we provide a custom validation message 
-  // First, we create a small tag and let the user know the field is required
-  // Second, we add a CSS class to the small tag, color: red, font-weight: bold;
-
-  // We don't want to show this error message always, we only want to show this error message when the user has touched the form control and there is no valid value
-  // For this we first add a template reference variable to the input tag called #fname.
-  // #fname now stores a reference to that specific input tag in the DOM (which returns us the input element in HTML)
-  // BUT, we want the input element as a JS object. 
-  // To fix this we can assign ngModel... #fname="ngModel" (we learned that when we use ngModel it tells ng that the input element is a form control for the form)
-  // Now it will store a reference of the input element as a JS object. 
-  // Doing this will give us access to the firstName property in the controls property. 
-  // #fname reference variable will be assigned firstName FormControl (can be seen in dev tool under controls)
-  // In this FormControl (firstName) it contains a valid and touched property that we can work with
-
-  // To the small tag we can use fname reference variable with the invalid and touched properties. 
-  // <small *ngIf="fname.invalid && fname.touched">*First Name is a Required Field</small>
-  // Initially the error message won't show, but if we click and don't put anything then the message will show
-  // Now we can add it to the lastName, and email input fields/controls
+  // To start we make the the form controls required
+  // Then we create the small tag, problem will arise where the tag will still show even if we have valid values
+  // We can now use the invlaid and valid properties on the FormGroup
+  // To do this we create an instance of the FormGroup using #addr="ngModelGroup" where addr has the instance of ngModelGroup which 
+  // contains an instance of the FormGroup address which allows us to access all the properties 
+  // In the small tag we can now use the addr reference variable and the invalid property with the ngIf directive to hide the tag
+  // once the values are valid.
+  // <small *ngIf="addr.invalid">*Some of the address fields do not contain a value</small>
   
 
+  // Now we want that small tag to be hidden when the page is initially loaded. If it has been touched then show the error message 
+  // we do this by adding  && addr.touched. 
+  // <small *ngIf="addr.invalid && addr.touched">*Some of the address fields do not contain a value</small>
 
-  // We can provide two way data binding so the user can see what is being placed in the form 
-  // In the TS file we create the firstName, lastName, and emailAddress
-  // In the template we use banana syntax on the ngModel and assign them the properties 
-  // We then use string interpolation to show the user what they have entered
 
-  // We don't want the "You entered: " text to show if the user hasn't entered anything. To fix this we...
-  // We use an ngIf statement in the template and place the property. If the property is empty, then don't show anything else
-  // show the text
-
+  // NOTE that if we go to the value property of the form, the controls in the address section are not there. Instead a new property has
+  // been added called address, address contains all the values from the FormGroup address
+  // To access it we would need to go through this console.log(this.form.value.address.country);
 
 
 

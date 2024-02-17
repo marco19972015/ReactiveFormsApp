@@ -55,7 +55,8 @@
             ngModel required #uname="ngModel" />
       <button class="btn-gen-username" 
               [disabled]="fname.invalid || lname.invalid || tempdob.invalid"
-              (click)="generateUsername()">
+              (click)="generateUsername()"
+              type="button">
          Create a Username
       </button>
     </div>

@@ -102,7 +102,11 @@
       </div>
     </div>
 
-    
+    <div class="column">
+      <input type="checkbox" name="agreement" [ngModel]="isAgreed">
+      <label for="agreement">I agree to terms & conditions</label>
+    </div>
+
     <!-- Access the FormGroup invalid property using the template reference variable -->
     <small *ngIf="addr.invalid && addr.touched">*Some of the address fields do not contain a value</small>
     <!-- Using the template reference variable we can use the valid/invalid property of form -->

@@ -21,6 +21,7 @@ export class AppComponent {
   postCode: string = '';
   region: string = '';
   username: string = '';
+  isAgreed: boolean = false;
 
   // Array with 3 objects 
   genders = [
@@ -45,9 +46,10 @@ export class AppComponent {
     this.postCode = this.form.value.address.postCode;
     this.username = this.form.value.username;
     this.dob = this.form.value.dob;
+    this.isAgreed = this.form.value.agreement;
 
     // Reset the form
-    this.form.reset()
+    // this.form.reset()
 
     // Setting the default values after form reset
     this.form.form.patchValue({
@@ -105,31 +107,24 @@ export class AppComponent {
 
   defaultCountry: string = 'United States'
 
-  // SIDE NOTES RETRIEVING FORM DATA
-  // In version 11, The focus here was to retrieve the values and show the user what was placed on the form using string interpolation.
+  // SIDE NOTES WORKING WITH CHECKBOXES
+  // In version 13, In this version we learn how to work with check boxes and retrieve either a false or true value depending on what 
+  // the user has clicked.
 
-  // Currently we are showing the values that are being placed by the user in the console, but now we want to show it in the template
-  // There are several ways to do this 
-
-  // One way is to create more properties like the ones on top such as firstName, lastName, dob properties
-  // gender: string = '';
-  // country: string = '';
-  // Now we want to set these properties with the properties values of the value object in the onFormSubmitted() method
-  // this.firstname = this.form.value.firstname;
-  // this.lastname = this.form.value.lastname;
-  // this.emailProperty = this.form.value.email;
-
-  // We then add to our html to the template and css to show initially hard coded values
-  // Using string interpolation syntax we can start to add the properties we want
+  // First we want to add the code for the checkbox, we also want to include ngModule this allows us to turn the checkbox into a JS/TS object
+  //   <div class="column">
+  //     <input type="checkbox" name="agreement" ngModel>
+  //     <label for="agreement">I agree to terms & conditions</label>
+  //   </div> 
   
-  // A problem we are now having is that because we are using two way data binding the values are showing up before we submit the form
-  // To fix this we remove the two way data binding from the template
-  // NOTE - We need to keep the ngModel directive because that is what connects the controls to the form
-  // SECOND NOTE - Becuase I made my own values I messed up the username method when removing the ngModel. To fix this instead of using the
-  // template to call the values, I called them from the ts file using the form conrols coming from the form itself after hitting submit
+  // Currently a problem with this is when the forms renders the initial value of the checkbox is empty string
+  // When we would actually want false
 
-  // Finally to add the first letter of both the firstname and the lastname we put the following code in the template
-  //  <p>{{firstname.slice(0, 1).toUpperCase()}} {{lastname.slice(0, 1).toUpperCase()}}</p>
+  // To fix this issue we can use property binding
+  // First we create 1 property called isAgreed, which we can then do property binding on isAgreed like so
+  // <input type="checkbox" name="agreement" [ngModel]="isAgreed">
+
+  // We can then work with the value by adding it to the OnFormSubmitted() method
   
   
 

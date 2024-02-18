@@ -7,7 +7,7 @@
     <div class="column">
       <div class="input-box">
         <input type="text" placeholder="First Name" 
-              name="firstName" [(ngModel)]="firstname" required #fname="ngModel"/>
+              name="firstname" ngModel required #fname="ngModel"/>
         <div>
           <small *ngIf="fname.invalid && fname.touched">*First Name is a Required Field</small>
         </div>
@@ -16,7 +16,7 @@
       </div> 
 
       <div class="input-box">
-        <input type="text" placeholder="Last Name" name="lastName" [(ngModel)]="lastname"
+        <input type="text" placeholder="Last Name" name="lastname" ngModel
               required #lname="ngModel"/>
         <div>
           <small *ngIf="lname.invalid && lname.touched">*Last Name is a Required Field</small>
@@ -27,7 +27,7 @@
     </div>    
 
     <div class="input-box">
-      <input type="text" placeholder="Email" name="email" [(ngModel)]="emailProperty"
+      <input type="text" placeholder="Email" name="email" ngModel
            required email #email="ngModel"/>
       <div>
         <small *ngIf="email.invalid && email.touched">*Entered email is not valid</small>
@@ -44,7 +44,7 @@
         <input type="number" placeholder="Phone Number" name="phoneNum" ngModel/>
       </div>
       <div class="input-box">
-        <input type="date" placeholder="Date of Birth" name="dob" [(ngModel)]="dob" required #tempdob="ngModel"/>
+        <input type="date" placeholder="Date of Birth" name="dob" ngModel required #tempdob="ngModel"/>
       </div>
     </div>
 
@@ -101,9 +101,34 @@
         <input type="number" placeholder="Postal code" name="postalCode" ngModel required/>
       </div>
     </div>
+
+    
     <!-- Access the FormGroup invalid property using the template reference variable -->
     <small *ngIf="addr.invalid && addr.touched">*Some of the address fields do not contain a value</small>
     <!-- Using the template reference variable we can use the valid/invalid property of form -->
     <input type="submit" value="Submit" class="submit-btn" [disabled]="!registrationForm.valid"> 
   </form>
+</section>
+
+<section class="user-detail-container">
+    <div class="user-details-container">
+      <div class="user-avatar">
+        <p>{{firstname.slice(0, 1).toUpperCase()}} {{lastname.slice(0, 1).toUpperCase()}}</p>
+      </div>
+      <div class="user-details">
+        <div class="user-name">
+          <h2>{{ firstname }} {{lastname}}</h2>
+        </div>
+        <p><b>Email:</b> {{ emailProperty}}</p>
+        <p><b>Username:</b> {{ username}}</p>
+        <p><b>Date of Birth: </b>{{dob}}</p>
+        <div class="user-name">
+          <h3>Address</h3>
+        </div>
+        <span>{{country}}</span>.
+        <span>{{city}}</span>.
+        <span>{{region}}</span>.
+        <span>{{postCode}}</span>.
+      </div>
+    </div>
 </section>

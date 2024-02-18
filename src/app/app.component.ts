@@ -1,5 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { first } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -9,10 +10,17 @@ import { NgForm } from '@angular/forms';
 export class AppComponent {
   title = 'template-driven-form';
 
+  // Holds values placed by user through databinding
   firstname: string = '';
   lastname: string = '';
   dob: string = '';
   emailProperty: string = '';
+  gender: string = '';
+  country: string = '';
+  city: string = '';
+  postCode: string = '';
+  region: string = '';
+  username: string = '';
 
   // Array with 3 objects 
   genders = [
@@ -24,12 +32,21 @@ export class AppComponent {
   @ViewChild('registrationForm') form!: NgForm
 
   onFormSubmitted(){
+    // logout the NgForm
     console.log(this.form);
-    console.log(this.form.control.value['firstName']); 
-    console.log(this.form.value.lastName);
-    console.log(this.form.value.email);
-    console.log(this.form.value.address.country);
 
+    // set values to the properties declared which come from the form value properties
+    this.firstname = this.form.value.firstname;
+    this.lastname = this.form.value.lastname;
+    this.emailProperty = this.form.value.email;
+    this.country = this.form.value.address.country;
+    this.city = this.form.value.address.city;
+    this.region = this.form.value.address.region;
+    this.postCode = this.form.value.address.postCode;
+    this.username = this.form.value.username;
+    this.dob = this.form.value.dob;
+
+    // Reset the form
     this.form.reset()
 
     // Setting the default values after form reset
@@ -46,28 +63,32 @@ export class AppComponent {
     // Variable to hold the username
     let username = ''
 
+    let firstName: string = this.form.value.firstname;
+    let lastName: string = this.form.value.lastname;
+    let Dob: string = this.form.value.dob;
+
     // if the firstname contains more than 3 characters
-    if(this.firstname.length >= 3){
+    if(firstName.length >= 3){
       // We want to get the first 3 characters (Ex. John we get Joh)
-      username += this.firstname.slice(0,3);
+      username += firstName.slice(0,3);
     }
     // first contains less than 3 characters
     else { 
-      username += this.firstname;
+      username += firstName;
     }
 
     // if the firstname contains more than 3 characters
-    if(this.lastname.length >= 3){
+    if(lastName.length >= 3){
       // We want to get the first 3 characters (Ex. John we get Joh)
-      username += this.lastname.slice(0,3);
+      username += lastName.slice(0,3);
     }
     // first contains less than 3 characters
     else { 
-      username += this.lastname;
+      username += lastName;
     }
 
     // This data value will return us a data type based of the string value contained in dob property
-    let dateTime = new Date(this.dob);
+    let dateTime = new Date(Dob);
 
     // This will return us the year from dataTime, and then we append that year to username property
     username += dateTime.getFullYear();
@@ -84,33 +105,35 @@ export class AppComponent {
 
   defaultCountry: string = 'United States'
 
-  // SIDE NOTES RESSETING A TEMPLATE DRIVEN FORM AND SETTING DEFAULT VALUES AFTER RESET
-  // In version 11, we focus on reseting the form after we click on the submit button, and also setting 
-  // some default values onces the reset has happened.
+  // SIDE NOTES RETRIEVING FORM DATA
+  // In version 11, The focus here was to retrieve the values and show the user what was placed on the form using string interpolation.
 
-  // Before we go into how to reset a form we have a bug where the 'Create a Username' button is submitting the form when we dont want it to
-  // Since the default of a button it of type="submit", we need to change it into type="button". 
-  // This will prevent the button from submitting the form now
+  // Currently we are showing the values that are being placed by the user in the console, but now we want to show it in the template
+  // There are several ways to do this 
 
-  // Going back to clearing the form after pressing submit
-  // The goal is to have the form reset, aswell as the state of the form (ng-dirty) ect should reset
+  // One way is to create more properties like the ones on top such as firstName, lastName, dob properties
+  // gender: string = '';
+  // country: string = '';
+  // Now we want to set these properties with the properties values of the value object in the onFormSubmitted() method
+  // this.firstname = this.form.value.firstname;
+  // this.lastname = this.form.value.lastname;
+  // this.emailProperty = this.form.value.email;
+
+  // We then add to our html to the template and css to show initially hard coded values
+  // Using string interpolation syntax we can start to add the properties we want
   
-  // In order to do this we go to the method that is being called from that button which is the onFormSubmitted method
-  // After reading and logging out the values... on NgForm object we have a method called reset()
-  // This method will reset the form meaning all the form controls and state of the form will get reset
+  // A problem we are now having is that because we are using two way data binding the values are showing up before we submit the form
+  // To fix this we remove the two way data binding from the template
+  // NOTE - We need to keep the ngModel directive because that is what connects the controls to the form
+  // SECOND NOTE - Becuase I made my own values I messed up the username method when removing the ngModel. To fix this instead of using the
+  // template to call the values, I called them from the ts file using the form conrols coming from the form itself after hitting submit
+
+  // Finally to add the first letter of both the firstname and the lastname we put the following code in the template
+  //  <p>{{firstname.slice(0, 1).toUpperCase()}} {{lastname.slice(0, 1).toUpperCase()}}</p>
+  
+  
 
 
-  // Now the problem is that is also resets default values that we might have (In this case we have two default values)
-  // After we reset the form we set the values values for the default values using patchValue() method in the onFormSubmitted() method
-
-  // this.form.form.patchValue({
-  //   gender: 'male',
-  //   address: {
-  //     country: 'United States'
-  //   }
-  // })  
-
-  // After these changes we can see the default values go back to what they were initially
 
 
 
